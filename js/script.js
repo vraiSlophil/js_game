@@ -121,7 +121,7 @@ printLevel(level);
 
 // Création des cercles.
 
-(function setupCircles(d) {
+function setupCircles(d) {
     for (let i = 0; i <= 5; i++) {
         const circle_base = document.createElement("div");
 
@@ -167,7 +167,25 @@ printLevel(level);
         }
 
     }
-})(1);
+}
+
+setupCircles(1);
+
+function newCircle(dif){
+    if (game_intermediate_base_circle.children.length==0 && dif!==0){
+        dif++;
+        d=dif;
+        setupCircles(d);
+        level = dif;
+        printLevel(level);
+    }  
+    if (dif == 0 ) {
+        dif = 1;
+        setupCircles(dif);
+        level = dif;
+        printLevel(level);
+    }
+}
 
 function addScore(e) {
     x = e.target;
@@ -191,20 +209,4 @@ function restartGame(){
     printBestScore(record);
     printLevel(level);
     newCircle(level);
-}
-
-function newCircle(dif){
-    if (game_intermediate_base_circle.children.length==0 && dif!==0){
-        dif++;
-        d=dif;
-        setupCircles(d);
-        level = dif;
-        printLevel(level);
-    }  
-    if (dif == 0 ) {
-        dif = 1;
-        setupCircles(dif);
-        level = dif;
-        printLevel(level);
-    }
 }
