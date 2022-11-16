@@ -1,3 +1,16 @@
+// =============================================================================== //
+//   _                  _          __ __   _             ___   _   _         _     //
+//  | |  ___   _ _    _| |  _ _   |  V  | (_)  ___  ___ |  _| | | (_)  ___  | |__  //
+// _| | / ._) | | |  / . | | | |  | |V| | | | <_-< <_-< | |_  | | | | / / ° |   /  //
+// \__/ \___> \___/  \___| \___/  |_| |_| |_| /__/ /__/ |___| |_| |_| \_\_. |_\_\  //
+//                                                                                 //
+// =============================================================================== //
+// 
+// Projet créée par Nathan Ouder, Nathan Lefebvre et Martin Baroukel.
+//
+
+// Création de la page.
+
 const body = document.getElementsByTagName("body");
 
 const header = document.createElement("header");
@@ -77,6 +90,8 @@ const game_intermediate_base_circle = document.createElement("div");
 game_intermediate_base_circle.setAttribute("id", "main__game__intermediate_base_circle");
 game.appendChild(game_intermediate_base_circle);
 
+// Création des variables et fonctions qui vont faire fonctionner le site.
+
 let score = 0;
 let record = 0;
 let level = 1;
@@ -100,13 +115,13 @@ function updateRecord(score) {
     }
 }
 
-
 printScore(score);
 printBestScore(record);
 printLevel(level);
 
+// Création des cercles.
 
-function setupCircles(d) {
+(function setupCircles(d) {
     for (let i = 0; i <= 5; i++) {
         const circle_base = document.createElement("div");
 
@@ -152,9 +167,7 @@ function setupCircles(d) {
         }
 
     }
-}
-
-setupCircles(1);
+})(1);
 
 function addScore(e) {
     x = e.target;
@@ -172,7 +185,7 @@ function restartGame(){
         game_intermediate_base_circle.removeChild(child);
         child = game_intermediate_base_circle.lastElementChild;
     }
-        score = 0;
+    score = 0;
     level = 0;
     printScore(score);
     printBestScore(record);
