@@ -38,6 +38,11 @@ const info_p = document.createElement("div");
 info_p.setAttribute("id","main__info__p");
 info.appendChild(info_p);
 
+let info_p_level = document.createElement("p");
+
+info_p_level.setAttribute("id","main__info__p__level");
+info_p.appendChild(info_p_level);
+
 let info_p_score = document.createElement("p");
 
 info_p_score.setAttribute("id","main__info__p__score");
@@ -48,74 +53,139 @@ let info_p_best = document.createElement("p");
 info_p_best.setAttribute("id","main__info__p__best");
 info_p.appendChild(info_p_best);
 
-const info_restart = document.createElement("a");
+const info_restart = document.createElement("div");
 
 info_restart.setAttribute("id","main__info__restart");
-info_restart.setAttribute("href","#");
+info_restart.setAttribute("onclick","restartGame()");
 info_restart.innerHTML = "Redémarrer";
 info.appendChild(info_restart);
 
 const game = document.createElement("div");
 
 game.setAttribute("id","main__game");
+game.setAttribute("onclick","restartGame()");
 main.appendChild(game);
 
 const game_intermediate_base_circle = document.createElement("div");
 
 game_intermediate_base_circle.setAttribute("id", "main__game__intermediate_base_circle");
-game_intermediate_base_circle.style.animation = "rotate 7.2s linear infinite";
 game.appendChild(game_intermediate_base_circle);
 
-let score = 0
+let score = 0;
+let record = 0;
+let level = 1;
+
+function printScore(score) {
+    info_p_score.innerHTML = "Score : " + score;
+}
+
+function printBestScore(bestScore) {
+    info_p_best.innerHTML = "Meilleur score : " + bestScore;
+}
+
+function printLevel(level) {
+    info_p_level.innerHTML = "Difficulté : " + level;
+}
+
 function updateRecord(score) {
-    
-}
-
-AllCookies = document.cookie;
-AllCookies = "record=" + score;
-
-function getCookieValue() {
-    let list = AllCookies.split("=");
-    return list[1];
-}
-
-let record = getCookieValue();
-
-info_p_score.innerHTML = "Score : " + score;
-info_p_best.innerHTML = "Meilleur score : " + record;
-
-for (let i = 0; i <= 5; i++) {
-    const circle_base = document.createElement("div");
-
-    circle_base.setAttribute("id","main__game__circle_base_" + i);
-    circle_base.style.height = "4em";
-    circle_base.style.width = "4em";
-    circle_base.style.backgroundColor = "red";
-    circle_base.style.position = "absolute";
-    circle_base.style.transform = "rotateZ(" + (i+1) * (360/6) +"deg) translateX(-12em)";
-    circle_base.style.display = "flex";
-    circle_base.style.justifyContent = "center";
-    circle_base.style.alignItems = "center";
-    circle_base.style.overflow = "hidden";
-    circle_base.style.borderRadius = "50%";
-    game_intermediate_base_circle.appendChild(circle_base);
-
-    const game_intermediate_base_circle_intermediate_inset_circle = document.createElement("div");
-
-    game_intermediate_base_circle_intermediate_inset_circle.setAttribute("id", "main__game__intermediate_base_circle__intermediate_inset_circle");
-    game_intermediate_base_circle_intermediate_inset_circle.style.animation = "rotate 14.4s linear reverse infinite";
-    circle_base.appendChild(game_intermediate_base_circle_intermediate_inset_circle);
-
-    for (let i = 0; i <= 5; i++) {
-        const circle_inset = document.createElement("div");
-        circle_inset.setAttribute("id","main__game__circle_base_" + i + "__circle_inset");
-        circle_inset.style.height = 2/3 + "em";
-        circle_inset.style.width = 2/3 + "em";
-        circle_inset.style.backgroundColor = "white";
-        circle_inset.style.position = "absolute";
-        circle_inset.style.transform = "rotateZ(" + (i+1) * (360/6) +"deg) translateX(-1.2em)";
-        circle_inset.style.borderRadius = "50%";
-        game_intermediate_base_circle_intermediate_inset_circle.appendChild(circle_inset);
+    if(score > record) {
+        record = score;
+        printBestScore(record);
     }
+}
 
+
+printScore(score);
+printBestScore(record);
+printLevel(level);
+
+
+function setupCircles(d) {
+    for (let i = 0; i <= 5; i++) {
+        const circle_base = document.createElement("div");
+
+        game_intermediate_base_circle.style.animation = "rotate " + 28.8/d + "s linear infinite";
+
+        circle_base.setAttribute("id","main__game__circle_base_" + i);
+        circle_base.onclick=addScore;
+        circle_base.style.height = "4em";
+        circle_base.style.width = "4em";
+        circle_base.style.backgroundColor = "red";
+        circle_base.style.position = "absolute";
+        circle_base.style.transform = "rotateZ(" + (i+1) * (360/6) +"deg) translateX(-12em)";
+        circle_base.style.display = "flex";
+        circle_base.style.justifyContent = "center";
+        circle_base.style.alignItems = "center";
+        circle_base.style.overflow = "hidden";
+        circle_base.style.borderRadius = "50%";
+        circle_base.style.zIndex = 8;
+        circle_base.style.pointerEvents = "auto";
+        circle_base.style.cursor = "pointer";
+        game_intermediate_base_circle.appendChild(circle_base);
+
+        const game_intermediate_base_circle_intermediate_inset_circle = document.createElement("div");
+
+        game_intermediate_base_circle_intermediate_inset_circle.setAttribute("id", "main__game__intermediate_base_circle__intermediate_inset_circle");
+        game_intermediate_base_circle_intermediate_inset_circle.style.animation = "rotate " + 14.4/d + "s linear reverse infinite";
+        circle_base.appendChild(game_intermediate_base_circle_intermediate_inset_circle);
+
+        for (let i = 0; i < 3; i++) {
+            const circle_inset = document.createElement("div");
+            circle_inset.setAttribute("id","main__game__circle_base_" + i + "__circle_inset");
+            circle_inset.onclick=addScore;
+            circle_inset.style.height = 4/3 + "em";
+            circle_inset.style.width = 4/3 + "em";
+            circle_inset.style.backgroundColor = "white";
+            circle_inset.style.position = "absolute";
+            circle_inset.style.transform = "rotateZ(" + (i+1) * (360/3) +"deg) translateX(-1.2em)";
+            circle_inset.style.borderRadius = "50%";
+            circle_inset.style.zIndex = 10;
+            circle_inset.style.pointerEvents = "auto";
+            circle_inset.style.cursor = "pointer";
+            game_intermediate_base_circle_intermediate_inset_circle.appendChild(circle_inset);
+        }
+
+    }
+}
+
+setupCircles(1);
+
+function addScore(e) {
+    x = e.target;
+    e.stopPropagation();
+    x.remove();
+    score++;
+    updateRecord(score);
+    newCircle(level);
+    printScore(score);
+}
+
+function restartGame(){
+    var child = game_intermediate_base_circle.lastElementChild; 
+    while (child) {
+        game_intermediate_base_circle.removeChild(child);
+        child = game_intermediate_base_circle.lastElementChild;
+    }
+        score = 0;
+    level = 0;
+    printScore(score);
+    printBestScore(record);
+    printLevel(level);
+    newCircle(level);
+}
+
+function newCircle(dif){
+    if (game_intermediate_base_circle.children.length==0 && dif!==0){
+        dif++;
+        d=dif;
+        setupCircles(d);
+        level = dif;
+        printLevel(level);
+    }  
+    if (dif == 0 ) {
+        dif = 1;
+        setupCircles(dif);
+        level = dif;
+        printLevel(level);
+    }
 }

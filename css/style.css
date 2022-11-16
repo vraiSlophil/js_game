@@ -4,6 +4,12 @@
     box-sizing: border-box;
     font-family: Arial, sans-serif;
     transition: 0.2s;
+    cursor: default;
+}
+
+*::selection {
+    background-color: transparent;
+    color: unset;
 }
 
 body {
@@ -64,6 +70,7 @@ body {
     border-radius: 0.2em;
     background-color: red;
     cursor: pointer;
+    color: white;
 }
 
 #main__info__restart:hover {
@@ -90,13 +97,13 @@ body {
 
 #main__game__intermediate_base_circle,
 #main__game__intermediate_base_circle__intermediate_inset_circle {
-    animation: rotate 3.6s infinite linear;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100%;
     position: absolute;
+    pointer-events: none;
 }
 
 @keyframes rotate {
