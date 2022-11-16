@@ -38,6 +38,12 @@ const info_p = document.createElement("div");
 info_p.setAttribute("id","main__info__p");
 info.appendChild(info_p);
 
+const info_description = document.createElement("p");
+
+info_description.setAttribute("id","main__info__description");
+info_description.innerHTML = "Le but du jeu est simple :<br>Cliquez sur le plus de cercles blancs et rouges possibles sans cilquer à coté des cercles rouges sinon c'est perdu ! Les cercles sur lesquels vous cliquez disparaitrons et vous gagnerez un point de score. Quand il n'y a plus de cercle, vous passez au niveau suivant !";
+info.appendChild(info_description);
+
 let info_p_level = document.createElement("p");
 
 info_p_level.setAttribute("id","main__info__p__level");
