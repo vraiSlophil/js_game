@@ -187,7 +187,7 @@ function newCircle(dif){
     }
 }
 
-function addScore(e) {
+function addScore(e) { 
     x = e.target;
     e.stopPropagation();
     x.remove();
@@ -197,12 +197,20 @@ function addScore(e) {
     printScore(score);
 }
 
+function looser() {
+    let looser = document.createElement("img");
+    looser.setAttribute("id","looser");
+    looser.setAttribute("src","img/defeat.png"); 
+    body[0].appendChild(looser);
+}
+
 function restartGame(){
     var child = game_intermediate_base_circle.lastElementChild; 
     while (child) {
         game_intermediate_base_circle.removeChild(child);
         child = game_intermediate_base_circle.lastElementChild;
     }
+    looser();
     score = 0;
     level = 0;
     printScore(score);

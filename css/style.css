@@ -18,6 +18,11 @@ body {
     position: relative;
 }
 
+#looser {
+    position: absolute;
+    animation: looserPop 1.5s ease-in-out forwards;
+}
+
 #header {
     position: fixed;
     top: 0;
@@ -113,5 +118,23 @@ body {
 @keyframes rotate {
     100% {
         transform: rotateZ(360deg);
+    }
+}
+
+@keyframes looserPop {
+    0% {
+        top: 50%;
+        left: 50%;
+        height: 0;
+    }
+    60% {
+        top: 28%;
+        left: 28%;
+        height: 60%;
+    }
+    100%{
+        top: 50%;
+        left: 50%;
+        height: 0;
     }
 }
